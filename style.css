@@ -1,0 +1,173 @@
+body {
+  background-color: rgb(0, 0, 0);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  overflow: hidden;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: black;
+}
+
+li {
+  float: right;
+}
+
+li p {
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 0px 16px;
+  text-decoration: none;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  color: grey;
+}
+
+/* Center and size the video */
+#homescreen-video {
+  display: block;
+  margin: 0 auto;
+  width: 80%;
+  max-width: 1024px;
+  aspect-ratio: 16 / 9;
+  background: black;
+}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 90%;
+  margin: 0px auto 0;
+  position: relative;
+  height: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Hover effect for the next and back buttons */
+.image-button {
+  position: fixed;
+  bottom: 10px;
+  width: 120px; 
+  height: 90px;
+  transition: all 0.3s ease; 
+}
+
+.click-here {
+  position: fixed;
+  bottom: 10px;
+  width: 90px;
+  height: 90px;
+}
+
+.back-button {
+  left: 10px;
+}
+
+.next-button {
+  right: 10px;
+}
+
+/* On hover, increase the size of the buttons */
+.image-button:hover {
+  width: 125px;
+  height: 95px;
+}
+
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 3s;
+}
+
+@keyframes fade {
+  from {opacity: .4}
+  to {opacity: 1}
+}
+
+/* Button hover effect */
+button:hover {
+  color: grey;
+}
+
+#message {
+  font-size: 16px;
+  margin-top: 20px;
+  color: green;
+}
+
+.rating-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Magazine Page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Refresh index.html after 180 seconds -->
+  <meta http-equiv="refresh" content="180;url=index.html">  
+
+  <!-- Styling -->
+  <style>
+    body {
+      animation: fadeInAnimation ease 3s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      margin: 1;
+      background-color: black; 
+      color: rgb(165, 165, 165);
+    }
+
+    @keyframes fadeInAnimation {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #222; /* Darker navbar for contrast */
+    }
+
+    ul li {
+      float: right;
+    }
+
+    ul li p {
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+    }
+
+    ul li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    ul li a:hover {
+      background-color: #555;
+    }
+
+    .magazine-layout {
+      display: flex;
+      flex-direction: row;
+      margin: 20px;
+      height: calc(100vh - 60px);
+    }
+
+    .left-column {
+      width: 50%;
+      padding: 20px;
+      box-sizing: border-box;
+      border-right: 1px solid #444;
+      overflow-y: auto;
+    }
+
+    .right-column {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap:10px;
+      align-items: flex-start; 
+    }
+
+    .game-button {
+      display: flex;
+      align-items: center;
+      width: 100%; 
+      max-width: 200px; 
+      height: auto;
+      padding: 15px;
+      font-size: 15px;
+      color: #fff;
+      background-color: #444;
+      border: none;
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .game-button img {
+      width: 55%; 
+      height: auto;
+      margin-right: 10px;
+    }
+
+    .game-button:hover {
+      background-color: #66666600;
+    }
+
+    .game-button a {
+      color: white;
+      text-decoration: none;
+    }
+
+    /* Positioning for Image Buttons */
+    .image-button {
+      position: fixed;
+      bottom: 10px;
+      width: 70px; 
+      height: 50px; 
+    }
+
+    .back-button {
+      left: 10px;
+    }
+
+    .next-button {
+      right: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Bar -->
+  <ul>
+    <li><a href="modal.html">Next</a></li>
+    <li><a href="index.html">Back</a></li>
+    <li style="float:left"><p>Touchscreen Interface Design Toolkit</p></li>
+  </ul>
+
+  <!-- magazine layout -->
+  <div class="magazine-layout">
+    <!-- left column for text -->
+    <div class="left-column">
+      <h1>What is Nostalgia?</h1>
+      <p>
+        Nostalgia is a feeling one gets when experiencing a sight, sound, smell, taste, or feel that reminds them of the past. It can involve a sense of comfort, happiness, or even a desire to relive moments from the past.
+      </p>
+      <p>
+        Video games are able to evoke feelings of nostalgia with their combination of visuals, soundtracks, gameplay, and narratives. 
+      </p>
+      <p>
+        Explore each classic gaming medium. Click on any section and enjoy the compilation videos of your favorite video games from the past.
+      </p>
+    </div>
+
+    <!-- right column for buttons -->
+    <div class="right-column">
+      <div class="button-container">
+        <a href="atariVideo.html" class="game-button">
+          <img src="atarigames.jpg" alt="Atari Games">Atari/NES Games
+        </a>
+        <a href="arcadeVideo.html" class="game-button">
+          <img src="arcadegames.jpg" alt="Arcade Games">Arcade Games
+        </a>
+        <a href="consoleVideo.html" class="game-button">
+          <img src="consolegames.jpg" alt="Console Games">Console Games
+        </a>
+        <a href="mobileGamesVideo.html" class="game-button">
+          <img src="mobilegames.jpg" alt="Mobile Games">Mobile Games
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- back and next image buttons -->
+  <a href="index.html">
+    <img src="backbutton.png" alt="Back" class="image-button back-button">
+  </a>
+  <a href="thankYou.html">
+    <img src="nextbutton.png" alt="Next" class="image-button next-button">
+  </a>
+</body>
+
+</html>
