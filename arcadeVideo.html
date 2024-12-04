@@ -74,6 +74,9 @@
   <a href="page1.html">
     <img src="backbutton.png" alt="Back" class="image-button back-button">
   </a>
+  <a href="consoleVideo.html">
+    <img src="nextbutton.png" alt="Next" class="image-button next-button">
+  </a>
   
   <div class="survey-container" id="survey-container">
     <h2>From 1-5, how nostalgic did this video make you feel?</h2>
@@ -107,7 +110,7 @@
 
     function sendSurveyResult(rating) {
       const videoId = "Arcade";
-      const url = "https://script.google.com/macros/s/AKfycbxN2XoRzGJI7-gZ9GJfCDjxRUtY0I_uyc5Qz7zXQoRr3-ftKaQ-YJfIgo9hsKAsA24DNA/exec"; 
+      const url = "https://script.google.com/macros/s/AKfycby8s8o0SiCBQ-DwsWet_601o1XRiGTxD_DKlwwFTl6bzS20AlNIUg6pYUmpcNNpud96sA/exec"; 
 
       fetch(url, {
         method: "POST",

@@ -74,6 +74,9 @@
   <a href="page1.html">
     <img src="backbutton.png" alt="Back" class="image-button back-button">
   </a>
+  <a href="arcadeVideo.html">
+    <img src="nextbutton.png" alt="Next" class="image-button next-button">
+  </a>
   
   <div class="survey-container" id="survey-container">
     <h2>From 1-5, how nostalgic did this video make you feel?</h2>
@@ -95,10 +98,9 @@
     dots.forEach(dot => {
       dot.addEventListener('click', () => {
         selectedRating = dot.getAttribute('data-rating');
-        dots.forEach(d => d.style.backgroundColor = 'lightgray'); // Reset all dots to original color
-        dot.style.backgroundColor = 'yellow'; // Highlight selected dot
+        dots.forEach(d => d.style.backgroundColor = 'lightgray');
+        dot.style.backgroundColor = 'green';
 
-        // Send the data to Google Sheets
         if (selectedRating) {
           sendSurveyResult(selectedRating);
         }
@@ -107,7 +109,7 @@
 
     function sendSurveyResult(rating) {
       const videoId = "Atari/NES";
-      const url = "https://script.google.com/macros/s/AKfycbxN2XoRzGJI7-gZ9GJfCDjxRUtY0I_uyc5Qz7zXQoRr3-ftKaQ-YJfIgo9hsKAsA24DNA/exec"; 
+      const url = "https://script.google.com/macros/s/AKfycby8s8o0SiCBQ-DwsWet_601o1XRiGTxD_DKlwwFTl6bzS20AlNIUg6pYUmpcNNpud96sA/exec"; 
 
       fetch(url, {
         method: "POST",
