@@ -112,9 +112,9 @@
   
     function sendSurveyResult(rating) {
       const videoId = "Console";
-      //const url = "https://script.google.com/macros/s/AKfycbwNQTJZqdXT03HjHFbcbluERshSiTLvLV9vFgG7iHRNF3hkqKH6Y1gAmzQumobsGbRFdg/exec";
+      const url = "https://script.google.com/macros/s/AKfycbxVNey48bOy6r3rdGIUY--pDUeQP_uvRsbIIijZ5FJKVxTiO39U-hL8WgvJnhY-mygmOw/exec";
   
-      fetch("https://script.google.com/macros/s/AKfycbwNQTJZqdXT03HjHFbcbluERshSiTLvLV9vFgG7iHRNF3hkqKH6Y1gAmzQumobsGbRFdg/exec", {
+      fetch(url, {
         method: "POST",
         body: JSON.stringify({
           videoId: videoId,
