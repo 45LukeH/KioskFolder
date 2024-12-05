@@ -59,16 +59,16 @@ li a:hover {
 .image-button {
   position: fixed;
   bottom: 10px;
-  width: 120px; 
-  height: 90px;
+  width: 180px; 
+  height: 130px;
   transition: all 0.3s ease; 
 }
 
 .click-here {
   position: fixed;
   bottom: 10px;
-  width: 90px;
-  height: 90px;
+  width: 150px;
+  height: 130px;
 }
 
 .back-button {
