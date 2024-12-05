@@ -9,13 +9,14 @@
     .image-button {
       position: fixed;
       bottom: 10px;
-      width: 120px; 
-      height: 90px; 
+      width: 120px;
+      height: 90px;
     }
 
     .back-button {
       left: 10px;
     }
+
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -24,6 +25,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      margin-bottom: 20px;
     }
 
     th, td {
@@ -35,6 +37,23 @@
     th {
       background-color: #f4f4f4;
     }
+
+    .clear-button {
+      position: fixed;
+      top: 20px;
+      right: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .clear-button:hover {
+      background-color: darkred;
+    }
   </style>
 </head>
 
@@ -43,6 +62,8 @@
         <img src="backbutton.png" alt="Back" class="image-button back-button">
       </a>
   <h1>Survey Results</h1>
+
+  <!-- Survey Results Table -->
   <table>
     <thead>
       <tr>
@@ -56,11 +77,30 @@
     </tbody>
   </table>
 
+  <!-- Average Rating Table -->
+  <h2>Average Ratings by Video</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Video ID</th>
+        <th>Average Rating</th>
+      </tr>
+    </thead>
+    <tbody id="average-ratings-table">
+      <!-- Average ratings will be loaded here -->
+    </tbody>
+  </table>
+
+  <!-- Clear Button -->
+  <button class="clear-button" onclick="clearRatings()">Clear All Ratings</button>
+
   <script>
     function loadSurveyResults() {
       const resultsTable = document.getElementById('results-table');
+      const averageRatingsTable = document.getElementById('average-ratings-table');
       const surveyResults = JSON.parse(localStorage.getItem('surveyResults')) || [];
 
+      // Load individual survey results into the first table
       if (surveyResults.length === 0) {
         const row = document.createElement('tr');
         row.innerHTML = '<td colspan="3">No survey results yet</td>';
@@ -77,6 +117,37 @@
         `;
         resultsTable.appendChild(row);
       });
+
+      // Calculate average ratings by video ID
+      const videoRatings = {};
+
+      surveyResults.forEach(result => {
+        if (!videoRatings[result.videoId]) {
+          videoRatings[result.videoId] = { totalRating: 0, count: 0 };
+        }
+        videoRatings[result.videoId].totalRating += parseInt(result.rating);
+        videoRatings[result.videoId].count += 1;
+      });
+
+      // Load average ratings into the second table
+      for (const videoId in videoRatings) {
+        const averageRating = (videoRatings[videoId].totalRating / videoRatings[videoId].count).toFixed(2);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${videoId}</td>
+          <td>${averageRating}</td>
+        `;
+        averageRatingsTable.appendChild(row);
+      }
+    }
+
+    // Function to clear all ratings from localStorage
+    function clearRatings() {
+      if (confirm("Are you sure you want to clear all ratings?")) {
+        localStorage.removeItem('surveyResults'); // Clear the survey results from localStorage
+        alert("All ratings have been cleared.");
+        window.location.reload(); // Reload the page to reflect the changes
+      }
     }
 
     // Load results on page load
