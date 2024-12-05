@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Survey Results</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Survey Results</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Video ID</th>
+        <th>Rating</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody id="results-table">
+      <!-- Results will be loaded here -->
+    </tbody>
+  </table>
+
+  <script>
+    function loadSurveyResults() {
+      const resultsTable = document.getElementById('results-table');
+      const surveyResults = JSON.parse(localStorage.getItem('surveyResults')) || [];
+
+      if (surveyResults.length === 0) {
+        const row = document.createElement('tr');
+        row.innerHTML = '<td colspan="3">No survey results yet</td>';
+        resultsTable.appendChild(row);
+        return;
+      }
+
+      surveyResults.forEach(result => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${result.videoId}</td>
+          <td>${result.rating}</td>
+          <td>${result.timestamp}</td>
+        `;
+        resultsTable.appendChild(row);
+      });
+    }
+
+    // Load results on page load
+    window.onload = loadSurveyResults;
+  </script>
+</body>
+
+</html>

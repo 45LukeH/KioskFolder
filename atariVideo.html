@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Atari/NES</title>
+  <title>Console</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
@@ -11,20 +11,16 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding: 20px;
-      color: WHITE;
+      color: rgb(255, 255, 255);
     }
 
     .survey-container {
       margin-top: 10px;
       display: inline-block;
       padding: 10px;
-      border: 1px solid #cccccc00;
+      border: none; /* Ensure no border interference */
       border-radius: 10px;
-      background-color: #f9f9f900;
-    }
-
-    .dots-container {
-      margin-top: 10px;
+      background-color: transparent; /* Maintain original background */
     }
 
     .dot {
@@ -47,25 +43,17 @@
     }
 
     .thank-you {
-      display: none;
-      color: green;
+      display: none; /* Initially hidden */
+      color: rgb(255, 255, 255);
       font-weight: bold;
       font-size: 18px;
-    }
-    
-    #homescreen-video {
-      display: block;
-      margin: 0 auto;
-      width: 60%;
-      max-width: 1024px;
-      aspect-ratio: 16 / 9;
-      background: black;
+      margin-top: 10px; /* Spacing for visibility */
     }
   </style>
 </head>
 
 <body>
-  <video id="homescreen-video" src="atariVideo.mp4" controls autoplay loop></video>
+  <video id="homescreen-video" src="atariVideo.mp4" controls autoplay loop style="max-width: 100%; height: auto;"></video> <!-- Responsive video -->
 
   <ul>
     <li style="float:left"><p>Touchscreen Interface Design Toolkit</p></li>
@@ -81,67 +69,72 @@
   <div class="survey-container" id="survey-container">
     <h2>From 1-5, how nostalgic did this video make you feel?</h2>
     <div class="rating-container">
-      <!-- The dots that the user can click on -->
+      <!-- Dots for rating -->
       <span class="dot" data-rating="1"></span>
       <span class="dot" data-rating="2"></span>
       <span class="dot" data-rating="3"></span>
       <span class="dot" data-rating="4"></span>
       <span class="dot" data-rating="5"></span>
     </div>
-    <div id="message" class="thank-you">Thank you for your response!</div>
+    <div id="thank-you" class="thank-you">Thank you! Your response has been saved.</div>
   </div>
 
   <script>
     const dots = document.querySelectorAll('.dot');
+    const thankYou = document.getElementById('thank-you');
+    const surveyContainer = document.getElementById('survey-container');
     let selectedRating = null;
 
     dots.forEach(dot => {
       dot.addEventListener('click', () => {
         selectedRating = dot.getAttribute('data-rating');
-        dots.forEach(d => d.style.backgroundColor = 'lightgray');
-        dot.style.backgroundColor = 'green';
+
+        dots.forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
 
         if (selectedRating) {
-          sendSurveyResult(selectedRating);
+          saveSurveyResult(selectedRating);
         }
       });
     });
 
-    function sendSurveyResult(rating) {
-  const videoId = "Atari/NES"; 
-  const url = "https://script.google.com/macros/s/AKfycbxqJadUPi7zSCZ2uq4rtwOKLTWGKMeZOyY1Wyy1jZFLT855s6L_WWdpD-_1h78BEbpUFg/exec"; 
+    function saveSurveyResult(rating) {
+      const videoId = "Console";
+      const surveyData = {
+        videoId: videoId,
+        rating: rating,
+        timestamp: new Date().toISOString()
+      };
 
-  fetch(url, {
-    method: "POST",
-    body: JSON.stringify({
-      videoId: videoId, 
-      rating: rating 
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Survey result saved:', data);
+      // Save survey data to localStorage
+      const existingData = JSON.parse(localStorage.getItem('surveyResults')) || [];
+      existingData.push(surveyData);
+      localStorage.setItem('surveyResults', JSON.stringify(existingData));
 
-    if (data.result === 'success') {
-      document.getElementById('message').style.display = 'block';
+      console.log("Survey data saved:", surveyData);
 
+      // Show thank-you message
+      if (thankYou) {
+        console.log("Before setting display to block:", window.getComputedStyle(thankYou).display);
+        thankYou.style.display = 'block';
+        console.log("Is thank-you element in the DOM?", document.body.contains(thankYou));
+        console.log("After setting display to block:", window.getComputedStyle(thankYou).display);
+      } else {
+        console.error("Thank-you element not found!");
+      }
+
+      // Hide the survey
+      surveyContainer.style.display = 'none';
+
+      // Reset visibility after 3 seconds
       setTimeout(() => {
-        document.getElementById('message').style.display = 'none'; 
+        if (thankYou) {
+          thankYou.style.display = 'none'; // Hide thank-you message
+        }
+        surveyContainer.style.display = 'block'; // Show survey again
       }, 3000);
-    } else {
-      console.error('Error saving survey result:', data.error);
     }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
-
   </script>
-
 </body>
 
 </html>

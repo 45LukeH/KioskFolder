@@ -23,10 +23,6 @@
       background-color: #f9f9f900;
     }
 
-    .dots-container {
-      margin-top: 10px;
-    }
-
     .dot {
       display: inline-block;
       width: 30px;
@@ -52,15 +48,6 @@
       font-weight: bold;
       font-size: 18px;
     }
-
-    #homescreen-video {
-      display: block;
-      margin: 0 auto;
-      width: 60%;
-      max-width: 1024px;
-      aspect-ratio: 16 / 9;
-      background: black;
-    }
   </style>
 </head>
 
@@ -81,75 +68,57 @@
   <div class="survey-container" id="survey-container">
     <h2>From 1-5, how nostalgic did this video make you feel?</h2>
     <div class="rating-container">
-      <!-- The dots that the user can click on -->
+      <!-- Dots for rating -->
       <span class="dot" data-rating="1"></span>
       <span class="dot" data-rating="2"></span>
       <span class="dot" data-rating="3"></span>
       <span class="dot" data-rating="4"></span>
       <span class="dot" data-rating="5"></span>
     </div>
-    <div id="message" class="thank-you">Thank you for your response!</div>
+    <div id="thank-you" class="thank-you">Thank you for your response!</div>
   </div>
 
   <script>
     const dots = document.querySelectorAll('.dot');
-    const message = document.getElementById('message');
+    const thankYou = document.getElementById('thank-you');
     const surveyContainer = document.getElementById('survey-container');
     let selectedRating = null;
-  
+
     dots.forEach(dot => {
       dot.addEventListener('click', () => {
         selectedRating = dot.getAttribute('data-rating');
-  
+
         dots.forEach(d => d.classList.remove('active'));
         dot.classList.add('active');
-  
+
         if (selectedRating) {
-          sendSurveyResult(selectedRating);
+          saveSurveyResult(selectedRating);
         }
       });
     });
-  
-    function sendSurveyResult(rating) {
-  const videoId = "Console"; 
-  const url = "https://script.google.com/macros/s/AKfycbz_6anXhHCupUIrzyD0Ndk9xJF9_rG-03THPaXPTunszhVBQ5hSHqj5f3u4PpEqWGRScQ/exec"; 
 
-  console.log('Sending request to:', url);
-  console.log('Data being sent:', { videoId: videoId, rating: rating });
+    function saveSurveyResult(rating) {
+      const videoId = "Console";
+      const surveyData = {
+        videoId: videoId,
+        rating: rating,
+        timestamp: new Date().toISOString()
+      };
 
-  fetch(url, {
-    method: "POST",
-    body: JSON.stringify({
-      videoId: videoId,
-      rating: rating
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  })
-  .then(response => {
-    console.log('Response status:', response.status); // Log response status
-    return response.json(); // Parse JSON response
-  })
-  .then(data => {
-    console.log('Survey result saved:', data);
+      // Save survey data to localStorage
+      const existingData = JSON.parse(localStorage.getItem('surveyResults')) || [];
+      existingData.push(surveyData);
+      localStorage.setItem('surveyResults', JSON.stringify(existingData));
 
-    if (data.result === 'success') {
-      message.style.display = 'block';
+      // Display thank you message
+      thankYou.style.display = 'block';
       surveyContainer.style.display = 'none';
 
       setTimeout(() => {
-        message.style.display = 'none'; 
+        thankYou.style.display = 'none';
+        surveyContainer.style.display = 'block';
       }, 3000);
-    } else {
-      console.error('Error saving survey result:', data.error);
     }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
-
   </script>
 </body>
 
