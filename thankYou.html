@@ -17,6 +17,7 @@
       align-items: center;
       margin: 0;
       flex-direction: column;
+      position: relative; 
     }
 
     h1 {
@@ -45,16 +46,63 @@
       width: 220px;
       height: 220px;
     }
+
+    .invisible-button {
+      position: absolute;
+      top: 10px;
+      width: 100px;
+      height: 100px;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      z-index: 1; 
+    }
+
+    .top-left {
+      left: 10px;
+    }
+
+    .top-right {
+      right: 10px;
+    }
   </style>
 </head>
 
 <body>
   <h1>Thank You</h1>
+
+  <button class="invisible-button top-left" id="top-left"></button>
+  <button class="invisible-button top-right" id="top-right"></button>
+
   <a href="index.html">
     <button class="image-button next-button">
       <img src="nextbutton.png" alt="Next Button">
     </button>
   </a>
+
+  <script>
+    let clickSequence = [];
+
+    function handleButtonClick(buttonId) {
+      clickSequence.push(buttonId);
+
+      if (clickSequence.join(',') === 'top-left,top-right,top-left') {
+        window.location.href = 'surveyResults.html';
+      }
+
+      if (clickSequence.length > 3) {
+        clickSequence.shift(); 
+      }
+    }
+
+    document.getElementById('top-left').addEventListener('click', function () {
+      handleButtonClick('top-left');
+    });
+
+    document.getElementById('top-right').addEventListener('click', function () {
+      handleButtonClick('top-right');
+    });
+  </script>
 </body>
 
 </html>

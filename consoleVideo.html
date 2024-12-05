@@ -7,52 +7,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
-      color: WHITE;
-    }
+#homescreen-video {
+  display: block;
+  margin: 0 auto;
+  width: 60%;
+  max-width: 1024px;
+  background: black;
+}
 
-    .survey-container {
-      margin-top: 10px;
-      display: inline-block;
-      padding: 10px;
-      border: 1px solid #cccccc00;
-      border-radius: 10px;
-      background-color: #f9f9f900;
-    }
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  color: rgb(255, 255, 255);
+}
 
-    .dot {
-      display: inline-block;
-      width: 30px;
-      height: 30px;
-      margin: 5px;
-      border-radius: 50%;
-      background-color: lightgray;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+.survey-container {
+  margin-top: 0px;
+  display: inline-block;
+  padding: 0px;
+  border: none;
+  border-radius: 0px;
+  background-color: black;
+  position: relative;
+  z-index: 1;
+}
 
-    .dot:hover {
-      background-color: #bbb;
-    }
+.dot {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0px;
+  border-radius: 1000%;
+  background-color: rgb(119, 119, 119);
+  cursor: pointer;
+}
 
-    .dot.active {
-      background-color: green;
-    }
+.dot:hover {
+  background-color: #bbb;
+}
 
-    .thank-you {
-      display: none;
-      color: green;
-      font-weight: bold;
-      font-size: 18px;
-    }
+.dot.active {
+  background-color: green;
+}
+
+.survey-container h2 {
+  font-size: 20px;
+}
+
+.survey-container .rating-container {
+  display: flex;
+  justify-content: center;
+}
+
+.survey-container .rating-container .dot {
+  margin: 10px;
+}
+
+.survey-container .thank-you {
+  font-weight: bold;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+}
+
   </style>
 </head>
 
 <body>
-  <video id="homescreen-video" src="consoleVideo.mp4" controls autoplay loop></video>
+  <video id="homescreen-video" src="consoleVideo.mp4" controls autoplay loop style="max-width: 100%; height: auto;"></video> 
 
   <ul>
     <li style="float:left"><p>Touchscreen Interface Design Toolkit</p></li>
@@ -75,50 +97,50 @@
       <span class="dot" data-rating="4"></span>
       <span class="dot" data-rating="5"></span>
     </div>
-    <div id="thank-you" class="thank-you">Thank you for your response!</div>
-  </div>
 
   <script>
-    const dots = document.querySelectorAll('.dot');
-    const thankYou = document.getElementById('thank-you');
-    const surveyContainer = document.getElementById('survey-container');
-    let selectedRating = null;
+  const dots = document.querySelectorAll('.dot');
+const surveyContainer = document.getElementById('survey-container');
+let selectedRating = null;
 
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        selectedRating = dot.getAttribute('data-rating');
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    selectedRating = dot.getAttribute('data-rating');
 
-        dots.forEach(d => d.classList.remove('active'));
-        dot.classList.add('active');
+    dots.forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
 
-        if (selectedRating) {
-          saveSurveyResult(selectedRating);
-        }
-      });
-    });
-
-    function saveSurveyResult(rating) {
-      const videoId = "Console";
-      const surveyData = {
-        videoId: videoId,
-        rating: rating,
-        timestamp: new Date().toISOString()
-      };
-
-      // Save survey data to localStorage
-      const existingData = JSON.parse(localStorage.getItem('surveyResults')) || [];
-      existingData.push(surveyData);
-      localStorage.setItem('surveyResults', JSON.stringify(existingData));
-
-      // Display thank you message
-      thankYou.style.display = 'block';
-      surveyContainer.style.display = 'none';
-
-      setTimeout(() => {
-        thankYou.style.display = 'none';
-        surveyContainer.style.display = 'block';
-      }, 3000);
+    if (selectedRating) {
+      saveSurveyResult(selectedRating);
     }
+  });
+});
+
+function saveSurveyResult(rating) {
+  const videoId = "Console";
+  const surveyData = {
+    videoId: videoId,
+    rating: rating,
+    timestamp: new Date().toISOString()
+  };
+
+  const existingData = JSON.parse(localStorage.getItem('surveyResults')) || [];
+  existingData.push(surveyData);
+  localStorage.setItem('surveyResults', JSON.stringify(existingData));
+
+  console.log("Survey data saved:", surveyData);
+
+  surveyContainer.innerHTML = `
+    <h2>Thank you! Your result has been saved.</h2>
+  `; 
+
+  const ratingContainer = document.querySelector('.rating-container');
+  ratingContainer.style.display = 'none'; 
+  
+  console.log("Displaying thank-you message");
+
+}
+
   </script>
 </body>
 
